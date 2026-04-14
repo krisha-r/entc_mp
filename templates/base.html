@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- This line will block cross site scripting-->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' ;" />
+
+    <title>[PLACEHOLDER]</title>
+
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="manifest" href="static/manifest.json" />
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.png" />
+  </head>
+
+  <body>
+    <h1 class="banner">[PLACEHOLDER]</h1>
+
+    <main>{%block content%} {% endblock %}</main>
+  </body>
+</html>
