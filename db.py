@@ -25,12 +25,12 @@ def register_user(username, password):
 
 
 def login_user(username, password):
-    print("THIS WORKS WHY WONT: THE REST WORKF AKDJFASLFJASLFJS LJFSAJFASFLDSJFLSAFFAL")
     if username is None or password is None:
         return False
-    hashed_password = generate_password_hash(password) 
-    response = supabase.table("Users").select("*").eq("username", username).single().execute()
-    response = response.data
-    if response["password"] == hashed_password:
-        return "HAHAHHAHAHA WORKSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
-    return response
+    try:
+        response = supabase.table("Users").select("*").eq("username", username).single().execute()
+        response = response.data
+        return check_password_hash(response["password"], password)
+    except:
+        return False
+    

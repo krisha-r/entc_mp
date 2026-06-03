@@ -33,14 +33,12 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         username = username.lower()
-        password = request.form['password']
-
-        print(db.login_user(username, password))
-         #         return redirect("/")
-    #     else:
-    #         flash("This username is already taken")
+        password = request.form['password']    
+        if db.login_user(username, password):
+                return redirect("/")
+        else:
+            flash("Username or password is incorrect")
     return render_template("login.html")
-
 
 
 if __name__=="__main__":
