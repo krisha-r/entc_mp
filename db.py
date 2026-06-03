@@ -1,4 +1,4 @@
-from supabase import create_client, Client
+from supabase import create_client, Client, AuthApiError
 import os
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,14 +12,25 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-def register_user(username, password, dob):
+def register_user(username, password):
     if username is None or password is None:
         return False
     hashed_password = generate_password_hash(password)
     data = {
         "username": username,
         "password": hashed_password,
-        "dob": dob
     }
     response = supabase.table("Users").insert(data).execute()
+    return response
+
+
+def login_user(username, password):
+    print("THIS WORKS WHY WONT: THE REST WORKF AKDJFASLFJASLFJS LJFSAJFASFLDSJFLSAFFAL")
+    if username is None or password is None:
+        return False
+    hashed_password = generate_password_hash(password) 
+    response = supabase.table("Users").select("*").eq("username", username).single().execute()
+    response = response.data
+    if response["password"] == hashed_password:
+        return "HAHAHHAHAHA WORKSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
     return response

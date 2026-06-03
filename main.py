@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 import os
 from supabase import create_client, Client
 from dotenv import load_dotenv
@@ -21,20 +21,28 @@ def register():
         username = request.form['username']
         username = username.lower()
         password = request.form['password']
-        dob = request.form['dob']
-        if db.register_user(username, password, dob):
+        if db.register_user(username, password):
                 # If the username and password are added then redirect them to the homepage
                 return redirect("/")
         # else:
             # flash("This username is already taken")
     return render_template("register.html"  )
   
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        username = request.form['username']
+        username = username.lower()
+        password = request.form['password']
+
+        print(db.login_user(username, password))
+         #         return redirect("/")
+    #     else:
+    #         flash("This username is already taken")
     return render_template("login.html")
 
 
 
 if __name__=="__main__":
-    app.run(debug=False)
+    app.run(debug=True)
     
